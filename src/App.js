@@ -1,15 +1,20 @@
 import { useEffect, useState } from 'react'
 import Sidebar from './Components/Sidebar'
 import Home from './Components/Home'
+import Navbar from './Components/Navbar';
 function App() {
   const [open, setOpen] = useState(false)
-
+  const [theme, setTheme] = useState("light")
+  useEffect(() => {
+    document.body.setAttribute("data-theme", theme)
+  }, [theme])
   return (
-    <div className="grid md:grid-cols-9">
-      <div className={open ? "col-span-2" : "col-span-1"}>
-        <Sidebar setOpen={setOpen} open={open} />
+    <div className="flex bg-gray-200 z-50 relative">
+      <div className={`${theme === "dark" ? "bg-[#2E1619]" : "bg-white"} absolute ${open ? "w-56" : "w-24"}`}>
+        <Sidebar setOpen={setOpen} open={open} theme={theme} />
       </div>
-      <div className="col-span-7">
+      <div className="col-span-2 ml-24">
+        <Navbar setTheme={setTheme} theme={theme} />
         <Home />
       </div>
     </div>
